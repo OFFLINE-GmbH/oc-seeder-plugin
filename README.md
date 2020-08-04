@@ -22,7 +22,7 @@ $factory->define(\YourVendor\YourPlugin\Models\YourModel::class, function (\OFFL
 
 ## Defining seeders
 
-Add a `registerSeeder` method to your `Plugin.php` in which you seed your plugin' models:
+Add a `registerSeeder` method to your `Plugin.php` in which you seed your plugin's models:
 
 ```php
 public function registerSeeder()
