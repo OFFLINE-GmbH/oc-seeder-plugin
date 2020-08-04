@@ -46,7 +46,7 @@ to attach a file to a created model:
 
 ```php
 // Create a model
-$myModel = factory(\YourVendor\YourPlugin\Models\YourModel::class);
+$myModel = factory(\YourVendor\YourPlugin\Models\YourModel::class)->create();
 // Attach an image
 $image = factory(\System\Models\File::class)->make();
 $myModel->image()->save($image);
