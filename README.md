@@ -1,6 +1,6 @@
 # oc-seeder-plugin
 
-Laravel Seeder integration for October CMS
+Laravel Seeder integration for October CMS.
 
 This plugin integrates Laravel's Factory and Database Seeder features with October CMS.
 
@@ -27,15 +27,30 @@ Add a `registerSeeder` method to your `Plugin.php` in which you seed your plugin
 ```php
 public function registerSeeder()
 {
-    factory(\YourVendor\YourPlugin\Models\YourModel::class, 50)->create()->each(function ($model) {
-        $model->image()->save(factory(\System\Model\File::class)->make());
-    });
+    factory(\YourVendor\YourPlugin\Models\YourModel::class, 50)->create();
 }
 ```
 
 ## Running seeders
 
 Simply run `php artisan plugin:seed` to run the seeders of all plugins.
+
+## Included factories
+
+This plugin includes factories for the following models:
+
+### `\System\Models\File::class`
+
+`factory(File::class)->make()` returns a File model with a random image from [unsplash.com](https://source.unsplash.com/). You can use it in any seeder
+to attach a file to a created model:
+
+```php
+// Create a model
+$myModel = factory(\YourVendor\YourPlugin\Models\YourModel::class);
+// Attach an image
+$myModel->image()->save(factory(File::class)->make());
+```
+
 
 ## Credits
 
