@@ -58,6 +58,13 @@ $myModel->image()->save($image);
 There are size states available: `tiny` returns a `90x90` image, `hd` returns a `1920x1080` image and `huge` returns a `6000x4000` image. 
 Only one side of the image will match the given dimension (it is uncropped by default).
 
+
+```php
+$tiny = factory(\System\Models\File::class)->states('tiny')->create();
+$hd = factory(\System\Models\File::class)->states('hd')->create();
+$huge = factory(\System\Models\File::class)->states('huge')->create();
+```
+
 ### `\Backend\Models\User::class`
 
 `factory(\Backend\Models\User::class)->make()` returns a Backend `User` model. You can use the `superuser`, `role:publisher` or `role:developer` states to generate a specific user type.
