@@ -65,6 +65,15 @@ $hd = factory(\System\Models\File::class)->states('hd')->create();
 $huge = factory(\System\Models\File::class)->states('huge')->create();
 ```
 
+If you need something other than an image, you can use the `pdf`, `mp3` or `xlsx` states:
+
+```php
+$pdf = factory(\System\Models\File::class)->states('pdf')->create();
+$mp3 = factory(\System\Models\File::class)->states('mp3')->create();
+$xlsx = factory(\System\Models\File::class)->states('xlsx')->create();
+```
+
+
 ### `\Backend\Models\User::class`
 
 `factory(\Backend\Models\User::class)->make()` returns a Backend `User` model. You can use the `superuser`, `role:publisher` or `role:developer` states to generate a specific user type.
