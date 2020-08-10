@@ -60,17 +60,18 @@ Only one side of the image will match the given dimension (it is uncropped by de
 
 
 ```php
-$tiny = factory(\System\Models\File::class)->states('tiny')->create();
-$hd = factory(\System\Models\File::class)->states('hd')->create();
-$huge = factory(\System\Models\File::class)->states('huge')->create();
+$tiny = factory(\System\Models\File::class)->states('tiny')->make();
+$hd = factory(\System\Models\File::class)->states('hd')->make();
+$huge = factory(\System\Models\File::class)->states('huge')->make();
 ```
 
 If you need something other than an image, you can use the `pdf`, `mp3` or `xlsx` states:
 
 ```php
-$pdf = factory(\System\Models\File::class)->states('pdf')->create();
-$mp3 = factory(\System\Models\File::class)->states('mp3')->create();
-$xlsx = factory(\System\Models\File::class)->states('xlsx')->create();
+$randomType = factory(\System\Models\File::class)->states('file')->make();
+$pdf = factory(\System\Models\File::class)->states('pdf')->make();
+$mp3 = factory(\System\Models\File::class)->states('mp3')->make();
+$xlsx = factory(\System\Models\File::class)->states('xlsx')->make();
 ```
 
 
