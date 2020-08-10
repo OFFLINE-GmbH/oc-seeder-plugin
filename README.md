@@ -44,7 +44,7 @@ This plugin includes factories for the following models:
 
 ### `\System\Models\File::class`
 
-`factory(\System\Models\File::class)->make()` returns a `File` model with a random image from [unsplash.com](https://source.unsplash.com/). You can use it in any seeder to attach a file to a created model:
+`factory(\System\Models\File::class)->make()` returns a `File` model with a random image. You can use it in any seeder to attach a file to a created model:
 
 ```php
 // Create a model
@@ -62,8 +62,6 @@ $portrait = factory(\System\Models\File::class)->state('portrait')->make();
 ```
 
 There are also different size states available: `tiny` returns a `90x90` image. `huge` returns a `6000x4000` image.
-
-For more control over the generated image, you can directly use the `ocImage` method in your factory. It returns the path to a locally stored image file. You can optionally pass in a `width` and `height` attribute.
 
 ### `\Backend\Models\User::class`
 
@@ -85,6 +83,9 @@ factory(\Backend\Models\User::class)->states('role:publisher')->make();
 `factory(\RainLab\User\Models\User::class)->make()` returns a RainLab `User` model.
 
 
+## Attribution
+
+All images used in this plugin are provided by unsplash.com.
 
 
 ## Credits
