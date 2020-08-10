@@ -42,16 +42,38 @@ This plugin includes factories for the following models:
 
 ### `\System\Models\File::class`
 
-`factory(File::class)->make()` returns a File model with a random image from [unsplash.com](https://source.unsplash.com/). You can use it in any seeder
+`factory(\System\Models\File::class)->make()` returns a `File` model with a random image from [unsplash.com](https://source.unsplash.com/). You can use it in any seeder
 to attach a file to a created model:
 
 ```php
 // Create a model
 $myModel = factory(\YourVendor\YourPlugin\Models\YourModel::class)->create();
+
 // Attach an image
 $image = factory(\System\Models\File::class)->make();
 $myModel->image()->save($image);
 ```
+
+### `\Backend\Models\User::class`
+
+`factory(\Backend\Models\User::class)->make()` returns a Backend `User` model. You can use the `superuser`, `role:publisher` or `role:developer` states to generate a specific user type.
+
+```php
+// Build a simple backend user.
+factory(\Backend\Models\User::class)->make();
+
+// Build a superuser backend user.
+factory(\Backend\Models\User::class)->states('superuser')->make();
+
+// Build a backend user with the publisher role attached.
+factory(\Backend\Models\User::class)->states('role:publisher')->make();
+```
+
+### `\RainLab\User\Models\User::class`
+
+`factory(\RainLab\User\Models\User::class)->make()` returns a RainLab `User` model.
+
+
 
 
 ## Credits
