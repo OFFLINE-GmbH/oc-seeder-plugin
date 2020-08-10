@@ -10,6 +10,7 @@ To define a new Factory for your plugin, create a `factories.php` in the plugin'
 
 ```php
 <?php
+// plugins/yourvendor/yourplugin/factories.php
 
 /** @var $factory Illuminate\Database\Eloquent\Factory */
 $factory->define(\YourVendor\YourPlugin\Models\YourModel::class, function (\OFFLINE\Seeder\Classes\Generator $faker) {
