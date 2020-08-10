@@ -55,13 +55,7 @@ $image = factory(\System\Models\File::class)->make();
 $myModel->image()->save($image);
 ```
 
-Use the `portrait` state to get an image in portrait orientation:
-
-```php
-$portrait = factory(\System\Models\File::class)->state('portrait')->make();
-```
-
-There are also different size states available: `tiny` returns a `90x90` image, `hd` returns a `1920x1080` image and `huge` returns a `6000x4000` image. 
+There are size states available: `tiny` returns a `90x90` image, `hd` returns a `1920x1080` image and `huge` returns a `6000x4000` image. 
 Only one side of the image will match the given dimension (it is uncropped by default).
 
 ### `\Backend\Models\User::class`
