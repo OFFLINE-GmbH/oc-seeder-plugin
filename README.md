@@ -8,7 +8,7 @@ This plugin integrates Laravel's Factory and Database Seeder features with Octob
 
 To define a new Factory for your plugin, create a `factories.php` in the plugin's root folder and define your factories [as you would in Laravel](https://laravel.com/docs/6.x/database-testing#writing-factories):
 
-```php
+```
 <?php
 // plugins/yourvendor/yourplugin/factories.php
 
@@ -25,7 +25,7 @@ $factory->define(\YourVendor\YourPlugin\Models\YourModel::class, function (\OFFL
 
 Add a `registerSeeder` method to your `Plugin.php` in which you seed your plugin's models:
 
-```php
+```
 public function registerSeeder()
 {
     factory(\YourVendor\YourPlugin\Models\YourModel::class, 50)->create();
@@ -46,7 +46,7 @@ This plugin includes factories for the following models:
 
 `factory(\System\Models\File::class)->make()` returns a `File` model with a random image. You can use it in any seeder to attach a file to a created model:
 
-```php
+```
 // Create a model
 $myModel = factory(\YourVendor\YourPlugin\Models\YourModel::class)->create();
 
@@ -59,15 +59,15 @@ There are size states available: `tiny` returns a `90x90` image, `hd` returns a 
 Only one side of the image will match the given dimension (it is uncropped by default).
 
 
-```php
+```
 $tiny = factory(\System\Models\File::class)->states('tiny')->make();
 $hd = factory(\System\Models\File::class)->states('hd')->make();
 $huge = factory(\System\Models\File::class)->states('huge')->make();
 ```
 
-If you need something other than an image, you can use the `pdf`, `mp3` or `xlsx` states:
+If you need something other than an image, you can use the `file`, `pdf`, `mp3` or `xlsx` states:
 
-```php
+```
 $randomType = factory(\System\Models\File::class)->states('file')->make();
 $pdf = factory(\System\Models\File::class)->states('pdf')->make();
 $mp3 = factory(\System\Models\File::class)->states('mp3')->make();
@@ -79,7 +79,7 @@ $xlsx = factory(\System\Models\File::class)->states('xlsx')->make();
 
 `factory(\Backend\Models\User::class)->make()` returns a Backend `User` model. You can use the `superuser`, `role:publisher` or `role:developer` states to generate a specific user type.
 
-```php
+```
 // Build a simple backend user.
 factory(\Backend\Models\User::class)->make();
 
