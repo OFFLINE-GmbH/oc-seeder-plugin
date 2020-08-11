@@ -97,7 +97,7 @@ factory(\Backend\Models\User::class)->states('role:publisher')->make();
 
 ## Attribution
 
-All images used in this plugin are provided by unsplash.com.
+All images used in this plugin are provided by [unsplash.com](https://unsplash.com).
 
 
 ## Credits
