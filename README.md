@@ -95,6 +95,28 @@ factory(\Backend\Models\User::class)->states('role:publisher')->make();
 `factory(\RainLab\User\Models\User::class)->make()` returns a RainLab `User` model.
 
 
+## Twig helper functions
+
+You can use the `random_image()` helper function to get a random image directly in your markup.
+
+```twig
+<img src="{{ random_image().thumb(400, 800) }}" alt=""/>
+<img src="{{ random_image('tiny').thumb(400, 800) }}" alt=""/>
+<img src="{{ random_image('hd').thumb(400, 800) }}" alt=""/>
+<img src="{{ random_image('huge').thumb(400, 800) }}" alt=""/>
+```
+
+If you need a valid file download, you can use the `random_file()` function:
+
+```twig
+<a href="{{ random_file('xlsx').path }}" download>Download the spreadsheet!</a>
+<a href="{{ random_file('pdf').path }}" download>Download the PDF!</a>
+
+{# or make some noise #}
+<audio controls src="{{ random_file('mp3').path }}"></audio>
+```
+
+
 ## Attribution
 
 All images used in this plugin are provided by [unsplash.com](https://unsplash.com).

@@ -8,6 +8,7 @@ use OFFLINE\Seeder\Classes\FakerFactory;
 use OFFLINE\Seeder\Classes\Generator;
 use OFFLINE\Seeder\Classes\MultiFactory;
 use OFFLINE\Seeder\Classes\OctoberCMSFakerProvider;
+use OFFLINE\Seeder\Classes\RandomFile;
 use OFFLINE\Seeder\Console\PluginSeedCommand;
 use System\Classes\PluginBase;
 
@@ -47,4 +48,19 @@ class Plugin extends PluginBase
             }
         );
     }
+
+    public function registerMarkupTags()
+    {
+        return [
+            'functions' => [
+                'random_image' => function ($size = 'default') {
+                    return RandomFile::image($size);
+                },
+                'random_file' => function ($type = 'xlsx') {
+                    return RandomFile::file($type);
+                },
+            ],
+        ];
+    }
+
 }
