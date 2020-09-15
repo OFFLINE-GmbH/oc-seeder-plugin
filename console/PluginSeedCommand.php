@@ -15,9 +15,15 @@ class PluginSeedCommand extends Command
     public function handle()
     {
         $fresh = (bool)$this->option('fresh');
+        $filter = collect(explode(',', $this->option('plugins')))->filter(
+            function ($identifier) {
+                return strtolower(trim($identifier));
+            }
+        )->toArray();
 
         $manager = SeederManager::instance();
-        $manager->seed($fresh, $this->output);
+        $manager->setOutput($this->output);
+        $manager->seed($fresh, $filter);
     }
 
     protected function getArguments()
@@ -29,6 +35,13 @@ class PluginSeedCommand extends Command
     {
         return [
             ['fresh', null, InputOption::VALUE_NONE, 'Remove any existing plugin data before running a seeder', null],
+            [
+                'plugins',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'Run a specific seeder. You can separate multiple plugins by a comma',
+                null,
+            ],
         ];
     }
 }

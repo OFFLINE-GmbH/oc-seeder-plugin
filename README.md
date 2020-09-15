@@ -34,10 +34,16 @@ public function registerSeeder()
 
 ## Running seeders
 
-Simply run `php artisan plugin:seed` to run the seeders of all plugins. 
+Simply run `php artisan plugin:seed` to run the seeders of all plugins. The seeder of each plugin will be only run once. 
 
-Use the `--fresh` option to refresh all seeded plugins before popuplating them with new data. Be aware that this will rollback and reinstall a plugin completely, so any plugin data will be lost.
+To run a seeder for a already seeded plugin, use the `--fresh` option. Be aware that this will rollback and reinstall all plugins with a registered seeder completely, so any plugin data will be lost.
 
+You can use the `--plugins` option to run only specified seeders. Simply provide a comma-separated list of plugin names.
+
+```
+php artisan plugin:seed --plugins=Vendor.PluginA,Vendor.PluginB --fresh
+```
+ 
 ## Included factories
 
 This plugin includes factories for the following models:
