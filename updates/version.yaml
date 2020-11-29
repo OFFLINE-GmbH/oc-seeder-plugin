@@ -5,3 +5,4 @@
         Seeder now keeps track of already seeded plugins (makes it easier to run the plugin:seed command repeatedly during development).
         You can now also run specific seeders using the --plugins option.
     - create_seeds_table.php
+1.0.4: Fixed typo in default seeder registration.
