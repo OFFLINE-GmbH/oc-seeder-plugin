@@ -44,7 +44,7 @@ class Plugin extends PluginBase
                 $faker = $app->make(Generator::class);
                 $faker->addProvider(new OctoberCMSFakerProvider($faker));
 
-                return MultiFactory::constructMany($faker, 'factory.php');
+                return MultiFactory::constructMany($faker, 'factories.php');
             }
         );
     }
