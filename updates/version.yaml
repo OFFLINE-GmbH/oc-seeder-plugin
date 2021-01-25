@@ -6,3 +6,4 @@
         You can now also run specific seeders using the --plugins option.
     - create_seeds_table.php
 1.0.4: Fixed typo in default seeder registration.
+1.0.5: Bugfix release
