@@ -19,7 +19,7 @@ class PluginSeedCommand extends Command
             function ($identifier) {
                 return strtolower(trim($identifier));
             }
-        )->toArray();
+        )->filter()->toArray();
 
         $manager = SeederManager::instance();
         $manager->setOutput($this->output);

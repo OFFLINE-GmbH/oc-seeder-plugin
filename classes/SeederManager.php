@@ -49,8 +49,10 @@ class SeederManager
             return;
         }
 
+        $hasError = false;
+
         $plugins->each(
-            function ($plugin, $identifier) use ($updateManager, $fresh) {
+            function ($plugin, $identifier) use ($updateManager, $fresh, &$hasError) {
                 /** @var $plugin \System\Classes\PluginBase */
                 if (method_exists($plugin, 'registerSeeder')) {
                     try {
@@ -68,8 +70,11 @@ class SeederManager
                         $plugin->registerSeeder();
                         $this->write('       <fg=black;bg=green>Done!</>', true);
                     } catch (\Throwable $e) {
-                        logger()->error('OFFLINE.Seeder failed: ' . $e->getMessage(), [$e]);
-                        $this->write('       <fg=white;bg=red>Failed! (see log)</>', true);
+                        logger()->error(sprintf('[Seeder for %s failed]: %s', $identifier, $e));
+                        $this->write('       <fg=white;bg=red>Failed!</>', true);
+                        $this->write("\n<fg=white;bg=red>" . $e->getMessage() . "</>\n", true);
+                        $this->write("<fg=blue>" . $e->getTraceAsString() . "</>\n", true);
+                        $hasError = true;
                     }
                     Seed::create(['seeder' => get_class($plugin)]);
                 } else {
@@ -77,6 +82,11 @@ class SeederManager
                 }
             }
         );
+
+        if ($hasError) {
+            $this->write("\n<fg=red>There was an error with at least one seeder.</>", true);
+            $this->write("<fg=red>Check the console output or your system.log file for more details.</>\n", true);
+        }
     }
 
     protected function write(string $data, bool $newLine = false)
