@@ -1,9 +1,10 @@
-1.0.1: Initial release
-1.0.2: Added twig helper functions to get a random image or file directly in your markup
-1.0.3:
+"1.0.1": "Initial release"
+"1.0.2": "Added twig helper functions to get a random image or file directly in your markup"
+"1.0.3":
     - |
         Seeder now keeps track of already seeded plugins (makes it easier to run the plugin:seed command repeatedly during development).
         You can now also run specific seeders using the --plugins option.
     - create_seeds_table.php
-1.0.4: Fixed typo in default seeder registration.
-1.0.5: Bugfix release
+"1.0.4": "Fixed typo in default seeder registration."
+"1.0.5": "Bugfix release"
+"1.0.6": "Fixed parsing of --plugins option (it is now properly case-insensitive)"

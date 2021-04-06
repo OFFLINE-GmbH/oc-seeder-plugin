@@ -15,7 +15,7 @@ class PluginSeedCommand extends Command
     public function handle()
     {
         $fresh = (bool)$this->option('fresh');
-        $filter = collect(explode(',', $this->option('plugins')))->filter(
+        $filter = collect(explode(',', $this->option('plugins')))->map(
             function ($identifier) {
                 return strtolower(trim($identifier));
             }
