@@ -9,3 +9,4 @@
 "1.0.5": "Bugfix release"
 "1.0.6": "Fixed parsing of --plugins option (it is now properly case-insensitive)"
 "1.0.7": "Optimized console and log file output in case of errors"
+"1.0.8": "Introduced seeder:init command to make the random_image() helper more performant"

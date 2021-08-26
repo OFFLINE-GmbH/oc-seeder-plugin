@@ -4,6 +4,20 @@ Laravel Seeder integration for October CMS.
 
 This plugin integrates Laravel's Factory and Database Seeder features with October CMS.
 
+## Installation
+
+1. Install the plugin using Composer.
+
+```bash
+composer require offline/oc-seeder-plugin
+```
+
+2. Setup the random file helpers.
+
+```bash
+php artisan seeder:init
+```
+
 ## Defining factories
 
 To define a new Factory for your plugin, create a `factories.php` in the plugin's root folder and define your factories [as you would in Laravel](https://laravel.com/docs/6.x/database-testing#writing-factories):
