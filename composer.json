@@ -6,7 +6,6 @@
   "require": {
     "composer/installers": "~1.0",
     "php": ">=7.2",
-    "ext-fileinfo": "*",
-    "fzaninotto/faker": "^1.9.1"
+    "laravel/framework": "^9.0"
   }
 }

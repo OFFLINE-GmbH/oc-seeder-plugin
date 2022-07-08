@@ -3,7 +3,8 @@
 namespace OFFLINE\Seeder;
 
 use Faker\Generator as FakerGenerator;
-use Illuminate\Database\Eloquent\Factory as EloquentFactory;
+use Illuminate\Database\Eloquent\Factories\Factory as EloquentFactory;
+use OFFLINE\Seeder\Behaviors\HasSeederFactoryBehavior;
 use OFFLINE\Seeder\Classes\FakerFactory;
 use OFFLINE\Seeder\Classes\Generator;
 use OFFLINE\Seeder\Classes\MultiFactory;
@@ -36,24 +37,31 @@ class Plugin extends PluginBase
         $this->registerConsoleCommand('offline.seeder.seed', PluginSeedCommand::class);
         $this->registerConsoleCommand('offline.seeder.init', InitSeedCommand::class);
 
+        $fakerLocale = config()->get('app.faker_locale', 'en_US');
+        $abstract = \Faker\Generator::class . ':' . $fakerLocale;
+
         // Bind our custom faker factory to the container.
         $this->app->singleton(
-            Generator::class,
-            function ($app) {
-                return FakerFactory::create($app['config']->get('app.faker_locale', 'en_US'));
+            $abstract,
+            function () use ($fakerLocale) {
+                return FakerFactory::create($fakerLocale);
             }
         );
-        // Build the Eloquent factory with our custom generator.
-        $this->app->singleton(
-            EloquentFactory::class,
-            function ($app) {
-                /** @var FakerGenerator $faker */
-                $faker = $app->make(Generator::class);
-                $faker->addProvider(new OctoberCMSFakerProvider($faker));
 
-                return MultiFactory::constructMany($faker);
-            }
-        );
+        // Add model factories to external models.
+        \System\Models\File::extend(function (\System\Models\File $file) {
+            $file->extendClassWith(HasSeederFactoryBehavior::class);
+        });
+
+        \Backend\Models\User::extend(function (\Backend\Models\User $user) {
+            $user->extendClassWith(HasSeederFactoryBehavior::class);
+        });
+
+        if (class_exists(\RainLab\User\Models\User::class)) {
+            \RainLab\User\Models\User::extend(function (\RainLab\User\Models\User $user) {
+                $user->extendClassWith(HasSeederFactoryBehavior::class);
+            });
+        }
     }
 
     public function registerMarkupTags()
@@ -63,7 +71,8 @@ class Plugin extends PluginBase
                 'random_image' => function ($size = 'default') {
                     if (!array_key_exists($size, self::FILE_SIZES)) {
                         throw new \LogicException(
-                            sprintf('Invalid file size "%s" passed to random_image helper, available are: %s', $size, implode(', ', array_keys(self::FILE_SIZES)))
+                            sprintf('Invalid file size "%s" passed to random_image helper, available are: %s', $size,
+                                implode(', ', array_keys(self::FILE_SIZES)))
                         );
                     }
 
@@ -79,7 +88,8 @@ class Plugin extends PluginBase
                 'random_file' => function ($type = 'xlsx') {
                     if (!in_array($type, self::FILE_TYPES)) {
                         throw new \LogicException(
-                            sprintf('Invalid file type "%s" passed to random_file helper, available are: %s', $type, implode(', ', self::FILE_TYPES))
+                            sprintf('Invalid file type "%s" passed to random_file helper, available are: %s', $type,
+                                implode(', ', self::FILE_TYPES))
                         );
                     }
                     $file = File::where('title', self::FILE_TITLE . ' ' . $type)->inRandomOrder()->first();

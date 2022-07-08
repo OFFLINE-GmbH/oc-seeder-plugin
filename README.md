@@ -20,19 +20,41 @@ php artisan seeder:init
 
 ## Defining factories
 
-To define a new Factory for your plugin, create a `factories.php` in the plugin's root folder and define your factories [as you would in Laravel](https://laravel.com/docs/6.x/database-testing#writing-factories):
+To define a new Factory for your plugin, create a `YourModelFactory.php` in the plugin's `factories` folder and define
+your factories [as you would in Laravel](https://laravel.com/docs/9.x/database-testing#defining-model-factories):
 
 ```php
 <?php
-// plugins/yourvendor/yourplugin/factories.php
+// plugins/yourvendor/yourplugin/factories/YourModelFactory.php
+namespace YourVendor\YourPlugin\Factories;
 
-/** @var $factory Illuminate\Database\Eloquent\Factory */
-$factory->define(\YourVendor\YourPlugin\Models\YourModel::class, function (\OFFLINE\Seeder\Classes\Generator $faker) {
-    return [
-        'name' => $faker->name,
-        'number' => $faker->numberBetween(0, 6),
-    ];
-});
+class YourModelFactory extends \OFFLINE\Seeder\Classes\Factory
+{
+    /**
+     * Default model attributes.
+     */
+    public function definition()
+    {
+        return [
+            'name' => fake()->name,
+            'number' => fake()->numberBetween(0, 6),
+        ];
+    }
+
+    /**
+     * Define states: Override attributes that differ from the default definition.
+     * Use it like this: YourModel::factory()->withHigherNumber()->make();
+     */
+    public function withHigherNumber()
+    {
+        return $this->states(function(array $attributes) {
+            return [
+                'number' => fake()->numberBetween(100, 900);
+            ];
+        });
+    }
+}
+
 ```
 
 ## Defining seeders
@@ -42,78 +64,76 @@ Add a `registerSeeder` method to your `Plugin.php` in which you seed your plugin
 ```php
 public function registerSeeder()
 {
-    factory(\YourVendor\YourPlugin\Models\YourModel::class, 50)->create();
+    \YourVendor\YourPlugin\Models\YourModel::factory()->count(50)->create();
 }
 ```
 
 ## Running seeders
 
-Simply run `php artisan plugin:seed` to run the seeders of all plugins. The seeder of each plugin will be only run once. 
+Simply run `php artisan plugin:seed` to run the seeders of all plugins. The seeder of each plugin will be only run once.
 
-To run a seeder for a already seeded plugin, use the `--fresh` option. Be aware that this will rollback and reinstall all plugins with a registered seeder completely, so any plugin data will be lost.
+To run a seeder for a already seeded plugin, use the `--fresh` option. Be aware that this will rollback and reinstall
+all plugins with a registered seeder completely, so any plugin data will be lost.
 
 You can use the `--plugins` option to run only specified seeders. Simply provide a comma-separated list of plugin names.
 
 ```
 php artisan plugin:seed --plugins=Vendor.PluginA,Vendor.PluginB --fresh
 ```
- 
+
 ## Included factories
 
 This plugin includes factories for the following models:
 
 ### `\System\Models\File::class`
 
-`factory(\System\Models\File::class)->make()` returns a `File` model with a random image. You can use it in any seeder to attach a file to a created model:
+`\System\Models\File::factory()->make()` returns a `File` model with a random image. You can use it in any seeder
+to attach a file to a created model:
 
 ```php
 // Create a model
-$myModel = factory(\YourVendor\YourPlugin\Models\YourModel::class)->create();
+$myModel = \YourVendor\YourPlugin\Models\YourModel::factory()->create();
 
 // Attach an image
-$image = factory(\System\Models\File::class)->make();
+$image = \System\Models\File::factory()->make();
 $myModel->image()->save($image);
 ```
 
-There are size states available: `tiny` returns a `90x90` image, `hd` returns a `1920x1080` image and `huge` returns a `6000x4000` image. 
+There are size states available: `tiny` returns a `90x90` image, `hd` returns a `1920x1080` image and `huge` returns
+a `6000x4000` image.
 Only one side of the image will match the given dimension (it is uncropped by default).
 
-
 ```php
-$tiny = factory(\System\Models\File::class)->states('tiny')->make();
-$hd = factory(\System\Models\File::class)->states('hd')->make();
-$huge = factory(\System\Models\File::class)->states('huge')->make();
+$tiny = \System\Models\File::factory()->tiny()->make();
+$hd = \System\Models\File::factory()->hd()->make();
+$huge = \System\Models\File::factory()->huge()->make();
 ```
 
 If you need something other than an image, you can use the `file`, `pdf`, `mp3` or `xlsx` states:
 
 ```php
-$randomType = factory(\System\Models\File::class)->states('file')->make();
-$pdf = factory(\System\Models\File::class)->states('pdf')->make();
-$mp3 = factory(\System\Models\File::class)->states('mp3')->make();
-$xlsx = factory(\System\Models\File::class)->states('xlsx')->make();
+$randomType = \System\Models\File::factory()->file()->make();
+$pdf = \System\Models\File::factory()->pdf()->make();
+$mp3 = \System\Models\File::factory()->mp3()->make();
+$xlsx = \System\Models\File::factory()->xlsx()->make();
 ```
-
 
 ### `\Backend\Models\User::class`
 
-`factory(\Backend\Models\User::class)->make()` returns a Backend `User` model. You can use the `superuser`, `role:publisher` or `role:developer` states to generate a specific user type.
+`\Backend\Models\User::factory()->make()` returns a Backend `User` model. You can use the `superuser`
+ state to generate a superuser.
 
 ```php
 // Build a simple backend user.
-factory(\Backend\Models\User::class)->make();
+\Backend\Models\User::factory()->make();
 
 // Build a superuser backend user.
-factory(\Backend\Models\User::class)->states('superuser')->make();
-
-// Build a backend user with the publisher role attached.
-factory(\Backend\Models\User::class)->states('role:publisher')->make();
+\Backend\Models\User::factory()->superuser()->make();
 ```
 
 ### `\RainLab\User\Models\User::class`
 
-`factory(\RainLab\User\Models\User::class)->make()` returns a RainLab `User` model.
-
+`\RainLab\User\Models\User::factory()->make()` returns a RainLab `User` model.
 
 ## Twig helper functions
 
@@ -136,11 +156,25 @@ If you need a valid file download, you can use the `random_file()` function:
 <audio controls src="{{ random_file('mp3').path }}"></audio>
 ```
 
+## Migrate from 1.0
+
+To migrate old seeders from Version 1.0 of this plugin, make the following changes:
+
+1. Move all factories from the `factories.php` to their own `Factory` classes in the `factories` directory.
+2. Change your `registerSeeder` method:
+
+```php
+// Old
+factory(YourModel::class)->make();
+factory(YourModel::class)->states('special')->make();
+// New
+YourModel::factory()->make();
+YourModel::factory()->special()->make();
+```
 
 ## Attribution
 
 All images used in this plugin are provided by [unsplash.com](https://unsplash.com).
-
 
 ## Credits
 
