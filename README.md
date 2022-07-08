@@ -68,6 +68,22 @@ public function registerSeeder()
 }
 ```
 
+## Migrate from 1.0
+
+To migrate old seeders from Version 1.0 of this plugin, make the following changes:
+
+1. Move all factories from the `factories.php` to their own `Factory` classes in the `factories` directory.
+2. Change your `registerSeeder` method:
+
+```php
+// Old
+factory(YourModel::class)->make();
+factory(YourModel::class)->states('special')->make();
+// New
+YourModel::factory()->make();
+YourModel::factory()->special()->make();
+```
+
 ## Running seeders
 
 Simply run `php artisan plugin:seed` to run the seeders of all plugins. The seeder of each plugin will be only run once.
@@ -154,22 +170,6 @@ If you need a valid file download, you can use the `random_file()` function:
 
 {# or make some noise #}
 <audio controls src="{{ random_file('mp3').path }}"></audio>
-```
-
-## Migrate from 1.0
-
-To migrate old seeders from Version 1.0 of this plugin, make the following changes:
-
-1. Move all factories from the `factories.php` to their own `Factory` classes in the `factories` directory.
-2. Change your `registerSeeder` method:
-
-```php
-// Old
-factory(YourModel::class)->make();
-factory(YourModel::class)->states('special')->make();
-// New
-YourModel::factory()->make();
-YourModel::factory()->special()->make();
 ```
 
 ## Attribution
