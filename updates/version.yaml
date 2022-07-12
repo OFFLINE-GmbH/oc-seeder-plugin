@@ -12,3 +12,4 @@
 "1.0.8": "Introduced seeder:init command to make the random_image() helper more performant"
 "2.0.0": "!!! Updated Factory definitions to be compatible with Laravel 9 / October 3. Check the README for the new syntax."
 "2.0.1": "Added missing Faker dependency"
+"2.0.2": "Fixed factory bug"
