@@ -49,6 +49,18 @@ abstract class Factory extends \Illuminate\Database\Eloquent\Factories\Factory
                 $modelName = str_replace('Factory', '', $parts[count($parts) - 1]);
 
                 $modelNamespace = $pluginNamespace . "\\Models\\$modelName";
+
+                // Use custom models for the added factories.
+                if ($factory::class === 'OFFLINE\\Seeder\\Factories\\FileFactory') {
+                    $modelNamespace = 'System\\Models\\File';
+                }
+                if ($factory::class === 'OFFLINE\\Seeder\\Factories\\UserFactory') {
+                    $modelNamespace = 'RainLab\\User\\Models\\User';
+                }
+                if ($factory::class === 'OFFLINE\\Seeder\\Factories\\BackendUserFactory') {
+                    $modelNamespace = 'Backend\\Models\\User';
+                }
+
                 if (!class_exists($modelNamespace)) {
                     throw new \RuntimeException("[OFFLINE.Seeder] Cannot find model class $modelNamespace");
                 }
