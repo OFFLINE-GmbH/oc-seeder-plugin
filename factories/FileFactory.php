@@ -3,13 +3,20 @@
 namespace OFFLINE\Seeder\Factories;
 
 use OFFLINE\Seeder\Classes\Factory;
+use OFFLINE\Seeder\Classes\OctoberCMSFakerProvider;
 
 class FileFactory extends Factory
 {
+    protected function fake() {
+        /** @var OctoberCMSFakerProvider $faker */
+        $faker = fake();
+
+        return $faker;
+    }
     public function definition()
     {
         return [
-            'data' => fake()->ocImage(),
+            'data' => $this->fake()->ocImage(),
         ];
     }
 
@@ -17,7 +24,7 @@ class FileFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'data' => fake()->ocImage('tiny'),
+                'data' => $this->fake()->ocImage('tiny'),
             ];
         });
     }
@@ -26,7 +33,7 @@ class FileFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'data' => fake()->ocImage('hd'),
+                'data' => $this->fake()->ocImage('hd'),
             ];
         });
     }
@@ -35,7 +42,7 @@ class FileFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'data' => fake()->ocImage('huge'),
+                'data' => $this->fake()->ocImage('huge'),
             ];
         });
     }
@@ -44,7 +51,7 @@ class FileFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'data' => fake()->ocFile('pdf'),
+                'data' => $this->fake()->ocFile('pdf'),
             ];
         });
     }
@@ -53,7 +60,7 @@ class FileFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'data' => fake()->ocFile('xlsx'),
+                'data' => $this->fake()->ocFile('xlsx'),
             ];
         });
     }
@@ -62,7 +69,7 @@ class FileFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'data' => fake()->ocFile('mp3'),
+                'data' => $this->fake()->ocFile('mp3'),
             ];
         });
     }
@@ -71,7 +78,7 @@ class FileFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'data' => fake()->ocFile('file'),
+                'data' => $this->fake()->ocFile('file'),
             ];
         });
     }
