@@ -1,12 +1,12 @@
 {
-  "name": "offline/oc-seeder-plugin",
-  "description": "Laravel Seeder integration for October CMS.",
-  "type": "october-plugin",
-  "license": "MIT",
-  "require": {
-    "composer/installers": "~1.0",
-    "php": ">=7.2",
-    "ext-fileinfo": "*",
-    "fzaninotto/faker": "^1.9.1"
-  }
+    "name": "offline/oc-seeder-plugin",
+    "description": "Laravel Seeder integration for October CMS.",
+    "type": "october-plugin",
+    "license": "MIT",
+    "require": {
+        "composer/installers": "~1.0",
+        "php": ">=7.2",
+        "fakerphp/faker": "^1.9.1",
+        "ext-fileinfo": "*"
+    }
 }
