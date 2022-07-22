@@ -57,6 +57,20 @@ class YourModelFactory extends \OFFLINE\Seeder\Classes\Factory
 
 ```
 
+
+Next, add the `\OFFLINE\Seeder\Classes\Factory\HasSeederFactory` trait to your model:
+
+```php
+<?php
+// plugins/yourvendor/yourplugin/models/YourModel.php
+namespace YourVendor\YourPlugin\Models;
+
+class YourModel extends Model
+{
+    use \OFFLINE\Seeder\Classes\Factory\HasSeederFactory; // add this
+}
+```
+
 ## Defining seeders
 
 Add a `registerSeeder` method to your `Plugin.php` in which you seed your plugin's models:
@@ -73,7 +87,8 @@ public function registerSeeder()
 To migrate old seeders from Version 1.0 of this plugin, make the following changes:
 
 1. Move all factories from the `factories.php` to their own `Factory` classes in the `factories` directory.
-2. Change your `registerSeeder` method:
+2. Add the `\OFFLINE\Seeder\Classes\Factory\HasSeederFactory` trait to all models
+3. Change your `registerSeeder` method:
 
 ```php
 // Old
