@@ -87,7 +87,7 @@ public function registerSeeder()
 To migrate old seeders from Version 1.0 of this plugin, make the following changes:
 
 1. Move all factories from the `factories.php` to their own `Factory` classes in the `factories` directory.
-2. Add the `\OFFLINE\Seeder\Classes\Factory\HasSeederFactory` trait to all models
+2. Add the `OFFLINE\Seeder\Traits\HasSeederFactory` trait to all models
 3. Change your `registerSeeder` method:
 
 ```php
