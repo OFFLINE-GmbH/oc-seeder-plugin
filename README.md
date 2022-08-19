@@ -58,7 +58,7 @@ class YourModelFactory extends \OFFLINE\Seeder\Classes\Factory
 ```
 
 
-Next, add the `\OFFLINE\Seeder\Classes\Factory\HasSeederFactory` trait to your model:
+Next, add the `OFFLINE\Seeder\Traits\HasSeederFactory` trait to your model:
 
 ```php
 <?php
@@ -67,7 +67,7 @@ namespace YourVendor\YourPlugin\Models;
 
 class YourModel extends Model
 {
-    use \OFFLINE\Seeder\Classes\Factory\HasSeederFactory; // add this
+    use OFFLINE\Seeder\Traits\HasSeederFactory; // add this
 }
 ```
 
