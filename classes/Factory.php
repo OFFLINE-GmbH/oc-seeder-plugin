@@ -2,8 +2,6 @@
 
 namespace OFFLINE\Seeder\Classes;
 
-use Illuminate\Support\Str;
-
 abstract class Factory extends \Illuminate\Database\Eloquent\Factories\Factory
 {
     /**
@@ -13,7 +11,7 @@ abstract class Factory extends \Illuminate\Database\Eloquent\Factories\Factory
      *
      * @return class-string<\Illuminate\Database\Eloquent\Factories\Factory>
      */
-    public static function resolveFactoryName(string $modelName)
+    public static function resolveFactoryName(string $modelName, string $handle = '')
     {
         $parts = explode('\\', $modelName);
         $pluginNamespace = implode('\\', [$parts[0], $parts[1]]);
@@ -23,6 +21,9 @@ abstract class Factory extends \Illuminate\Database\Eloquent\Factories\Factory
         // Use custom model factories for external models.
         if ($pluginNamespace === 'System\\Models' || $pluginNamespace === '\\RainLab\\User\\Models') {
             $pluginNamespace = 'OFFLINE\\Seeder';
+        } elseif ($pluginNamespace === 'Tailor\\Models') {
+            $pluginNamespace = 'App';
+            $modelName = $handle;
         } elseif ($pluginNamespace === '\\Backend\\Models') {
             $pluginNamespace = 'OFFLINE\\Seeder';
             $modelName = 'BackendUser';
@@ -44,30 +45,46 @@ abstract class Factory extends \Illuminate\Database\Eloquent\Factories\Factory
     public function modelName()
     {
         $resolver = static::$modelNameResolver ?? function (self $factory) {
-                $parts = explode('\\', $factory::class);
-                $pluginNamespace = implode('\\', [$parts[0], $parts[1]]);
-                $modelName = str_replace('Factory', '', $parts[count($parts) - 1]);
+            $parts = explode('\\', $factory::class);
+            $pluginNamespace = implode('\\', [$parts[0], $parts[1]]);
+            $modelName = str_replace('Factory', '', $parts[count($parts) - 1]);
 
-                $modelNamespace = $pluginNamespace . "\\Models\\$modelName";
+            $modelNamespace = $pluginNamespace . "\\Models\\$modelName";
 
-                // Use custom models for the added factories.
-                if ($factory::class === 'OFFLINE\\Seeder\\Factories\\FileFactory') {
-                    $modelNamespace = 'System\\Models\\File';
-                }
-                if ($factory::class === 'OFFLINE\\Seeder\\Factories\\UserFactory') {
-                    $modelNamespace = 'RainLab\\User\\Models\\User';
-                }
-                if ($factory::class === 'OFFLINE\\Seeder\\Factories\\BackendUserFactory') {
-                    $modelNamespace = 'Backend\\Models\\User';
-                }
+            // Use custom models for the added factories.
+            if ($factory::class === 'OFFLINE\\Seeder\\Factories\\FileFactory') {
+                $modelNamespace = 'System\\Models\\File';
+            }
+            if ($factory::class === 'OFFLINE\\Seeder\\Factories\\UserFactory') {
+                $modelNamespace = 'RainLab\\User\\Models\\User';
+            }
+            if ($factory::class === 'OFFLINE\\Seeder\\Factories\\BackendUserFactory') {
+                $modelNamespace = 'Backend\\Models\\User';
+            }
+            if (starts_with($factory::class, 'App\\Factories')) {
+                $modelNamespace = 'Tailor\\Models\\EntryRecord';
+            }
 
-                if (!class_exists($modelNamespace)) {
-                    throw new \RuntimeException("[OFFLINE.Seeder] Cannot find model class $modelNamespace");
-                }
+            if (!class_exists($modelNamespace)) {
+                throw new \RuntimeException("[OFFLINE.Seeder] Cannot find model class $modelNamespace");
+            }
 
-                return $modelNamespace;
-            };
+            return $modelNamespace;
+        };
 
         return $this->model ?? $resolver($this);
+    }
+
+    /**
+     * Get a new factory instance for the given model name.
+     *
+     * @param  class-string<\Illuminate\Database\Eloquent\Model>  $modelName
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public static function factoryForModel(string $modelName, string $handle = '')
+    {
+        $factory = static::resolveFactoryName($modelName, $handle);
+
+        return $factory::new();
     }
 }

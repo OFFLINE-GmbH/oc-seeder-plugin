@@ -82,6 +82,78 @@ public function registerSeeder()
 }
 ```
 
+## Tailor integration
+
+Starting from version 2.1, this plugin can be used to seed Tailor data.
+
+### Requirements
+
+To seed Tailor data using this plugin, it is required that all Tailor blueprint handles are in the `SomeSection\SomeEntity` format, like `Blog\Post`.
+
+### Defining factories
+
+For a Tailor entity like `Blog\Post`, create the file `app/factories/blog/PostFactory.php` and define your factory in it.
+
+```php
+<?php
+
+namespace App\Factories\Blog;
+
+class PostFactory extends \OFFLINE\Seeder\Classes\Factory
+{
+    public function definition()
+    {
+        return [
+            'title' => fake()->sentence,
+            // ...
+        ];
+    }
+}
+```
+
+### Registering seeders
+
+In the `app/Provider.php`, add a static `registerSeeder` method and define your seeders like so:
+
+```php
+<?php
+
+namespace App;
+
+use OFFLINE\Seeder\Classes\Factory;
+
+class Provider extends \System\Classes\AppBase
+{
+    // ...
+
+    /**
+     * @param $seed \Closure(string $handle, \Closure(Factory $factory) $callback): void
+     */
+    public static function registerSeeder(\Closure $seed)
+    {
+        // Blog\Post = blueprint handle
+        $seed('Blog\Post', function(Factory $factory) {
+            $factory->count(10)->create();
+        });
+
+        $seed('Blog\Category', function(Factory $factory) {
+            // ...
+        });
+
+        $seed('Blog\Author', function(Factory $factory) {
+            // ...
+        });
+    }
+```
+
+### Seeding specific blueprints
+
+The `--plugins` flag can be used to seed specific entities:
+
+```bash
+php artisan plugin:seed --plugins=Blog\\Post
+```
+
 ## Migrate from 1.0
 
 To migrate old seeders from Version 1.0 of this plugin, make the following changes:

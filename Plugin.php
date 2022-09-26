@@ -57,6 +57,12 @@ class Plugin extends PluginBase
             $user->extendClassWith(HasSeederFactoryBehavior::class);
         });
 
+        if (class_exists('\Tailor\Models\EntryRecord')) {
+            \Tailor\Models\EntryRecord::extend(function (\Tailor\Models\EntryRecord $record) {
+                $record->extendClassWith(HasSeederFactoryBehavior::class);
+            });
+        }
+
         if (class_exists(\RainLab\User\Models\User::class)) {
             \RainLab\User\Models\User::extend(function (\RainLab\User\Models\User $user) {
                 $user->extendClassWith(HasSeederFactoryBehavior::class);
