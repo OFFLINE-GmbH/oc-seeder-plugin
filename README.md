@@ -106,6 +106,7 @@ class PostFactory extends \OFFLINE\Seeder\Classes\Factory
         return [
             'title' => fake()->sentence,
             // ...
+            'is_enabled' => true,
         ];
     }
 }
