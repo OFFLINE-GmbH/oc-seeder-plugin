@@ -127,7 +127,7 @@ class SeederManager
                     $factory = $factory->afterMaking($extendWithBlueprint);
                     $factory = $factory->afterCreating($extendWithBlueprint);
 
-                    $this->write(sprintf('<info>Tailor: %-30s: -> seeding...</info>', $handle));
+                    $this->write(sprintf('<info>%-30s: -> seeding...</info>', $handle));
                     try {
                         $callback($factory);
                     } catch (\Throwable $e) {
@@ -141,7 +141,7 @@ class SeederManager
                     Seed::create(['seeder' => $handle]);
                 });
             } else {
-                $this->write(sprintf('%-30s: No seeders found', 'Tailor'), true);
+                $this->write(sprintf('%-30s: No seeders found', ''), true);
             }
         }
 
