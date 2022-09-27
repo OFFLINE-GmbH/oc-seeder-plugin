@@ -14,3 +14,4 @@
 "2.0.1": "Added missing Faker dependency"
 "2.0.2": "Fixed factory bug"
 "2.1.0": "Implemented seeder support for Tailor entities"
+"2.1.2": "Bugfix for Tailor seeders"
