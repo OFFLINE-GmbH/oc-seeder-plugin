@@ -152,10 +152,19 @@ class Provider extends \System\Classes\AppBase
 The `--plugins` flag can be used to seed specific entities:
 
 ```bash
-php artisan plugin:seed --plugins=Blog\\Post
+php artisan offline:seeder --plugins=Blog\\Post
 ```
 
-## Migrate from 1.0
+## Migrate from 2.x
+
+October 3.3 introduced its own `plugin:seed` Artisan command. To 
+resolve this conflict, the Artisan command of this plugin was 
+renamed to `offline:seeder`.
+
+No special migration work is required, you can just use the new 
+Artisan command.
+
+## Migrate from 1.x
 
 To migrate old seeders from Version 1.0 of this plugin, make the following changes:
 
@@ -174,7 +183,7 @@ YourModel::factory()->special()->make();
 
 ## Running seeders
 
-Simply run `php artisan plugin:seed` to run the seeders of all plugins. The seeder of each plugin will be only run once.
+Simply run `php artisan offline:seeder` to run the seeders of all plugins. The seeder of each plugin will be only run once.
 
 To run a seeder for a already seeded plugin, use the `--fresh` option. Be aware that this will rollback and reinstall
 all plugins with a registered seeder completely, so any plugin data will be lost.
@@ -182,7 +191,7 @@ all plugins with a registered seeder completely, so any plugin data will be lost
 You can use the `--plugins` option to run only specified seeders. Simply provide a comma-separated list of plugin names.
 
 ```
-php artisan plugin:seed --plugins=Vendor.PluginA,Vendor.PluginB --fresh
+php artisan offline:seeder --plugins=Vendor.PluginA,Vendor.PluginB --fresh
 ```
 
 ## Included factories

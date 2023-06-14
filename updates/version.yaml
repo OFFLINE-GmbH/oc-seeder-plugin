@@ -15,3 +15,4 @@
 "2.0.2": "Fixed factory bug"
 "2.1.0": "Implemented seeder support for Tailor entities"
 "2.1.2": "Bugfix for Tailor seeders"
+"3.0.0": "Renamed artisan command to offline:seeder, to prevent conflict with October 3.3"

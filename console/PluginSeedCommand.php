@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputOption;
 
 class PluginSeedCommand extends Command
 {
-    protected $name = 'plugin:seed';
+    protected $name = 'offline:seeder';
 
     protected $description = 'Runs all plugin seeders';
 
