@@ -67,7 +67,7 @@ namespace YourVendor\YourPlugin\Models;
 
 class YourModel extends Model
 {
-    use OFFLINE\Seeder\Traits\HasSeederFactory; // add this
+    use \OFFLINE\Seeder\Traits\HasSeederFactory; // add this
 }
 ```
 
