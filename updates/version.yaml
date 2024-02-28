@@ -17,3 +17,4 @@
 "2.1.2": "Bugfix for Tailor seeders"
 "3.0.0": "Renamed artisan command to offline:seeder, to prevent conflict with October 3.3"
 "3.0.1": "Added Laravel 10 support"
+"3.0.2": "Fixed October 3.6 compatibility issue"
