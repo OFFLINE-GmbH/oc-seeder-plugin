@@ -7,7 +7,7 @@ use OFFLINE\Seeder\Classes\Factory;
 
 class HasSeederFactoryBehavior extends \October\Rain\Extension\ExtensionBase
 {
-    protected $parent;
+    public $parent;
 
     public function __construct($parent)
     {
